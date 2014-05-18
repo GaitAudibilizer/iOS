@@ -52,6 +52,7 @@
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Pause","pause taking samples")
 #define kLocalizedResume	NSLocalizedString(@"Resume","resume taking samples")
+#define systemSoundID    1025
 
 @interface MainViewController()
 
@@ -98,6 +99,12 @@
 	// Update the accelerometer graph view
 	if(!isPaused)
 	{
+        //Play tone if acceleration is greater than cutoff value
+        //More complete step detection will be added here later
+        if (acceleration.z > 1) {
+            AudioServicesPlaySystemSound (systemSoundID);
+        }
+        
 		[filter addAcceleration:acceleration];
 		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
 		[filtered addX:filter.x y:filter.y z:filter.z];
@@ -126,12 +133,16 @@
 		// If we're paused, then resume and set the title to "Pause"
 		isPaused = NO;
 		pause.title = kLocalizedPause;
+        
+        //Test if systemsound is being called correctly
+        AudioServicesPlaySystemSound (systemSoundID);
 	}
 	else
 	{
 		// If we are not paused, then pause and set the title to "Resume"
 		isPaused = YES;
 		pause.title = kLocalizedResume;
+        AudioServicesPlaySystemSound (systemSoundID);
 	}
 	
 	// Inform accessibility clients that the pause/resume button has changed.
@@ -175,6 +186,7 @@
 	[filterLabel release];
 	[pause release];
 	[super dealloc];
+    
 }
 
 @end

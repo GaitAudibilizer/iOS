@@ -145,7 +145,8 @@
     NSLog(@"settings button pressed");
   
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
-    [self presentViewController:settingsViewController animated:YES completion:nil];
+//    [self presentViewController:settingsViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:settingsViewController animated:YES];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 

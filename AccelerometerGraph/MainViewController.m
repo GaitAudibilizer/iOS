@@ -17,7 +17,7 @@
 
 @implementation MainViewController
 
-@synthesize unfiltered, filtered, pause, filterLabel;
+@synthesize unfiltered, filtered, pause, filterLabel, settingsButton;
 
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
@@ -45,6 +45,8 @@
 
 -(void)viewDidUnload
 {
+    [self setSettingsButton:nil];
+    [self setSettingsButton:nil];
 	[super viewDidUnload];
 	self.unfiltered = nil;
 	self.filtered = nil;
@@ -87,6 +89,7 @@
 
 -(IBAction)pauseOrResume:(id)sender
 {
+    NSLog(@"pausing");
 	if(isPaused)
 	{
 		// If we're paused, then resume and set the title to "Pause"
@@ -137,6 +140,15 @@
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
+-(IBAction)settingsButton:(id)sender
+{
+    NSLog(@"settings button pressed");
+  
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
+    [self.navigationController pushViewController:settingsViewController animated:YES];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+}
+
 -(void)dealloc
 {
 	// clean up everything.
@@ -144,6 +156,7 @@
 	[filtered release];
 	[filterLabel release];
 	[pause release];
+    [settingsButton release];
 	[super dealloc];
     
 }

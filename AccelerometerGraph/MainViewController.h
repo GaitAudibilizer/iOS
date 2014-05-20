@@ -12,10 +12,12 @@
 	GraphView *unfiltered;
 	GraphView *filtered;
 	UIBarButtonItem *pause;
+    UIButton *settingsButton;
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
 	BOOL isPaused, useAdaptive;
 }
+
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;
@@ -23,6 +25,8 @@
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
 @property(nonatomic) double *footStrikeCutoff;
 @property(nonatomic) BOOL *soundOn;
+
+@property (retain, nonatomic) IBOutlet UIButton *settingsButton;
 
 -(IBAction)pauseOrResume:(id)sender;
 -(IBAction)filterSelect:(id)sender;

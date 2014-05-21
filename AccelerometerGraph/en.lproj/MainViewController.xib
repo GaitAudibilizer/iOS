@@ -34,18 +34,11 @@
                     </items>
                 </toolbar>
                 <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="21" customClass="GraphView">
-                    <rect key="frame" x="0.0" y="49" width="320" height="112"/>
+                    <rect key="frame" x="0.0" y="78" width="320" height="112"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Accelerometer Data" lineBreakMode="tailTruncation" minimumFontSize="10" id="44">
-                            <rect key="frame" x="20" y="9" width="280" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="j1B-YS-3YE">
-                            <rect key="frame" x="235" y="0.0" width="57" height="30"/>
+                            <rect key="frame" x="251" y="0.0" width="57" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Settings">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,19 +51,19 @@
                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="22" customClass="GraphView">
-                    <rect key="frame" x="0.0" y="198" width="320" height="112"/>
+                    <rect key="frame" x="0.0" y="227" width="320" height="112"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Lowpass Filter" lineBreakMode="tailTruncation" minimumFontSize="10" id="45">
-                    <rect key="frame" x="20" y="169" width="280" height="21"/>
+                    <rect key="frame" x="20" y="198" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="85">
-                    <rect key="frame" x="20" y="318" width="280" height="29"/>
+                    <rect key="frame" x="20" y="347" width="280" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.75" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <segments>
@@ -82,7 +75,7 @@
                     </connections>
                 </segmentedControl>
                 <segmentedControl opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="86">
-                    <rect key="frame" x="20" y="365" width="280" height="29"/>
+                    <rect key="frame" x="20" y="394" width="280" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.75" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <segments>

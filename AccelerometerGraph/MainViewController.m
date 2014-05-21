@@ -23,6 +23,9 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
+    [self setTitle:@"Gait Audibilizer"];
+    
+    
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
 	useAdaptive = NO;
@@ -38,9 +41,12 @@
     
 }
 
+
+
 - (void)addItemViewController:(SettingsViewController *)controller didFinishEnteringItem:(NSString *)item
 {
-    NSLog(@"This was returned from SettingsViewController %@",item);
+//    _soundOn = item;
+    NSLog(item);
 }
 
 -(void)viewDidUnload
@@ -143,9 +149,9 @@
 -(IBAction)settingsButton:(id)sender
 {
     NSLog(@"settings button pressed");
-  
+
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
-//    [self presentViewController:settingsViewController animated:YES completion:nil];
+    settingsViewController.delegate=self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }

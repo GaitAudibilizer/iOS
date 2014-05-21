@@ -16,6 +16,12 @@
     UIViewController *cont=[[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
     self.navController=[[UINavigationController alloc]initWithRootViewController:cont];
     
+    [self.navController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navController.navigationBar.shadowImage = [UIImage new];
+    self.navController.navigationBar.translucent = YES;
+    self.navController.view.backgroundColor = [UIColor clearColor];
+    
     [self.window setRootViewController:navController];
     
     [self.window makeKeyAndVisible];

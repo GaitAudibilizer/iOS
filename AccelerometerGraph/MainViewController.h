@@ -18,13 +18,15 @@
 	BOOL isPaused, useAdaptive;
 }
 
+@property(nonatomic) double *footStrikeCutoff;
+@property(nonatomic) BOOL *soundOn;
+@property(nonatomic) BOOL *footIsDown;
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *pause;
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
-@property(nonatomic) double *footStrikeCutoff;
-@property(nonatomic) BOOL *soundOn;
+
 
 @property (retain, nonatomic) IBOutlet UIButton *settingsButton;
 

@@ -39,14 +39,10 @@
 
 -(IBAction)soundOnOrOff:(id)sender
 {
-    NSString *itemToPassBack = @"Pass this value back to MainViewController";
-    [self.delegate addItemViewController:self didFinishEnteringItem:itemToPassBack];
-    
-    if (soundSwitch.on) {
-        //sound is turned on
-    }else{
-        //sound is turned off
-    }
+    NSLog(@"Soundswitch pressed");
+    BOOL *soundOn = soundSwitch.isOn;
+    [self.delegate addItemViewController:self didFinishEnteringItem:@"sound"];
+     [self dismissModalViewControllerAnimated:YES];
 }
 
 -(IBAction)footStrikeCutoffSelect:(id)sender

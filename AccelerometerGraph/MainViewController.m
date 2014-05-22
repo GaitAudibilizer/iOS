@@ -25,7 +25,9 @@
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
-    
+    //initialize ivariables
+    footStrikeCutoff = 2;
+    _soundOn = YES;
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
 	useAdaptive = NO;
@@ -49,6 +51,12 @@
     NSLog(item ? @"Yes" : @"No");
 }
 
+- (void)setFootstrikeCutoff:(SettingsViewController *)controller didFinishEnteringItem:(double)item
+{
+    footStrikeCutoff = item;
+    NSLog([NSString stringWithFormat:@"%0.1f", footStrikeCutoff]);
+}
+
 -(void)viewDidUnload
 {
     [self setSettingsButton:nil];
@@ -69,7 +77,7 @@
         //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
         if(self.soundOn){
-            if (acceleration.y > *self.footStrikeCutoff) {
+            if (acceleration.y > footStrikeCutoff) {
                 //play sound
                 AudioServicesPlaySystemSound (systemSoundID);
                 
@@ -77,7 +85,6 @@
                 self.footIsDown = YES;
             }
         }
-
         
 		[filter addAcceleration:acceleration];
 		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
@@ -169,7 +176,6 @@
 	[pause release];
     [settingsButton release];
 	[super dealloc];
-    
 }
 
 @end

@@ -54,12 +54,11 @@
 
 -(IBAction)footStrikeCutoffSelect:(id)sender
 {
-    if (sender == footStrikeCutoffSlider){
-        
-    }
     _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
     NSLog([NSString stringWithFormat:@"%.f", footStrikeCutoffSlider.value]);
     [footStrikeSliderLabel setText:_footStrikeLabelString];
+    [self.delegate setFootstrikeCutoff:self didFinishEnteringItem:(double)footStrikeCutoffSlider.value];
+    
 }
 
 

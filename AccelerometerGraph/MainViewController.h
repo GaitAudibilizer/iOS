@@ -16,9 +16,11 @@
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
 	BOOL isPaused, useAdaptive;
+    double footStrikeCutoff;
+    
 }
 
-@property(nonatomic) double *footStrikeCutoff;
+//@property(nonatomic) double *footStrikeCutoff;
 @property(nonatomic) BOOL *soundOn;
 @property(nonatomic) BOOL *footIsDown;
 

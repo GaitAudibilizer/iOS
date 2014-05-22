@@ -12,6 +12,7 @@
 
 @protocol SettingsViewControllerDelegate <NSObject>
 - (void)addItemViewController:(SettingsViewController*)controller didFinishEnteringItem:(BOOL *)item;
+- (void)setFootstrikeCutoff:(SettingsViewController*)controller didFinishEnteringItem:(double)item;
 @end
 
 @interface SettingsViewController : UIViewController

@@ -36,18 +36,6 @@
                 <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="21" customClass="GraphView">
                     <rect key="frame" x="0.0" y="78" width="320" height="112"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="j1B-YS-3YE">
-                            <rect key="frame" x="251" y="0.0" width="57" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Settings">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="settingsButton:" destination="-1" eventType="touchUpInside" id="oOY-f0-6cI"/>
-                            </connections>
-                        </button>
-                    </subviews>
                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="22" customClass="GraphView">
@@ -86,6 +74,16 @@
                         <action selector="adaptiveSelect:" destination="-1" eventType="valueChanged" id="96"/>
                     </connections>
                 </segmentedControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="j1B-YS-3YE">
+                    <rect key="frame" x="223" y="189" width="57" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Settings">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="settingsButton:" destination="-1" eventType="touchUpInside" id="oOY-f0-6cI"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

@@ -27,7 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Set slider parameters and update label
     footStrikeCutoffSlider.continuous = YES;
+    footStrikeCutoffSlider.minimumValue = 1;
+    footStrikeCutoffSlider.maximumValue = 4;
+    footStrikeCutoffSlider.value = 2;
+    _footStrikeLabelString = [NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value];
+    [footStrikeSliderLabel setText:_footStrikeLabelString];
     
 }
 
@@ -51,6 +58,7 @@
         
     }
     _footStrikeLabelString = [NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value];
+    NSLog([NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value]);
     [footStrikeSliderLabel setText:_footStrikeLabelString];
 }
 

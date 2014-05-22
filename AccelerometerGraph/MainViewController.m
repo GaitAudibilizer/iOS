@@ -17,13 +17,15 @@
 
 @implementation MainViewController
 
-@synthesize unfiltered, filtered, pause, filterLabel, settingsButton;
+@synthesize unfiltered, filtered, pause, filterLabel/*, settingsButton*/;
 
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
     
     //initialize ivariables
     footStrikeCutoff = 2;
@@ -43,7 +45,14 @@
     
 }
 
-
+-(void) goToSettings {
+    NSLog(@"settings button pressed");
+    
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
+    settingsViewController.delegate=self;
+    [self.navigationController pushViewController:settingsViewController animated:YES];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+}
 
 - (void)addItemViewController:(SettingsViewController *)controller didFinishEnteringItem:(BOOL *)item
 {
@@ -157,15 +166,15 @@
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
--(IBAction)settingsButton:(id)sender
-{
-    NSLog(@"settings button pressed");
-
-    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
-    settingsViewController.delegate=self;
-    [self.navigationController pushViewController:settingsViewController animated:YES];
-    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-}
+//-(IBAction)settingsButton:(id)sender
+//{
+//    NSLog(@"settings button pressed");
+//
+//    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
+//    settingsViewController.delegate=self;
+//    [self.navigationController pushViewController:settingsViewController animated:YES];
+//    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+//}
 
 -(void)dealloc
 {
@@ -174,7 +183,7 @@
 	[filtered release];
 	[filterLabel release];
 	[pause release];
-    [settingsButton release];
+//    [settingsButton release];
 	[super dealloc];
 }
 

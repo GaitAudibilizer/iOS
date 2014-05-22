@@ -12,7 +12,7 @@
 	GraphView *unfiltered;
 	GraphView *filtered;
 	UIBarButtonItem *pause;
-    UIButton *settingsButton;
+//    UIButton *settingsButton;
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
 	BOOL isPaused, useAdaptive;

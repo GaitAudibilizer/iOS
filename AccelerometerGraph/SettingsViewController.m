@@ -47,12 +47,18 @@
 
 -(IBAction)footStrikeCutoffSelect:(id)sender
 {
-    
+    if (sender == footStrikeCutoffSlider){
+        
+    }
+    _footStrikeLabelString = [NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value];
+    [footStrikeSliderLabel setText:_footStrikeLabelString];
 }
+
 
 - (void)dealloc {
     [soundSwitch release];
     [footStrikeCutoffSlider release];
+    [footStrikeSliderLabel release];
     [footStrikeSliderLabel release];
     [super dealloc];
 }

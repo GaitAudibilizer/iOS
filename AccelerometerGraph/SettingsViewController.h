@@ -19,8 +19,9 @@
 
 }
 
-@property (nonatomic, assign) id <SettingsViewControllerDelegate> delegate;
+@property(nonatomic, retain) NSString *footStrikeLabelString;
 
+@property (nonatomic, assign) id <SettingsViewControllerDelegate> delegate;
 @property (retain, nonatomic) IBOutlet UISwitch *soundSwitch;
 @property (retain, nonatomic) IBOutlet UISlider *footStrikeCutoffSlider;
 @property (retain, nonatomic) IBOutlet UILabel *footStrikeSliderLabel;

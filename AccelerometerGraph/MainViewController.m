@@ -108,9 +108,6 @@
 		// If we're paused, then resume and set the title to "Pause"
 		isPaused = NO;
 		pause.title = kLocalizedPause;
-        
-        //Test if systemsound is being called correctly
-        AudioServicesPlaySystemSound (systemSoundID);
 	}
 	else
 	{

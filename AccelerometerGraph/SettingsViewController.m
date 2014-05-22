@@ -40,9 +40,9 @@
 -(IBAction)soundOnOrOff:(id)sender
 {
     NSLog(@"Soundswitch pressed");
-    BOOL *soundOn = soundSwitch.isOn;
-    [self.delegate addItemViewController:self didFinishEnteringItem:@"sound"];
-     [self dismissModalViewControllerAnimated:YES];
+    
+    [self.delegate addItemViewController:self didFinishEnteringItem:soundSwitch.isOn];
+//    [self dismissModalViewControllerAnimated:YES];
 }
 
 -(IBAction)footStrikeCutoffSelect:(id)sender

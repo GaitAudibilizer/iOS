@@ -11,7 +11,7 @@
 @class SettingsViewController;
 
 @protocol SettingsViewControllerDelegate <NSObject>
-- (void)addItemViewController:(SettingsViewController*)controller didFinishEnteringItem:(NSString *)item;
+- (void)addItemViewController:(SettingsViewController*)controller didFinishEnteringItem:(BOOL *)item;
 @end
 
 @interface SettingsViewController : UIViewController

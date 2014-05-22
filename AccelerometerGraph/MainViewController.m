@@ -43,10 +43,10 @@
 
 
 
-- (void)addItemViewController:(SettingsViewController *)controller didFinishEnteringItem:(NSString *)item
+- (void)addItemViewController:(SettingsViewController *)controller didFinishEnteringItem:(BOOL *)item
 {
-//    _soundOn = item;
-    NSLog(item);
+    _soundOn = item;
+    NSLog(item ? @"Yes" : @"No");
 }
 
 -(void)viewDidUnload
@@ -66,11 +66,18 @@
 	// Update the accelerometer graph view
 	if(!isPaused)
 	{
-        //Play tone if acceleration is greater than cutoff value
+        //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
-        if (acceleration.z > 1) {
-            AudioServicesPlaySystemSound (systemSoundID);
+        if(self.soundOn){
+            if (acceleration.y > *self.footStrikeCutoff) {
+                //play sound
+                AudioServicesPlaySystemSound (systemSoundID);
+                
+                //Foot is now down
+                self.footIsDown = YES;
+            }
         }
+
         
 		[filter addAcceleration:acceleration];
 		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];

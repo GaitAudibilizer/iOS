@@ -33,7 +33,7 @@
     footStrikeCutoffSlider.minimumValue = 1;
     footStrikeCutoffSlider.maximumValue = 4;
     footStrikeCutoffSlider.value = 2;
-    _footStrikeLabelString = [NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value];
+    _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
     [footStrikeSliderLabel setText:_footStrikeLabelString];
     
 }
@@ -57,8 +57,8 @@
     if (sender == footStrikeCutoffSlider){
         
     }
-    _footStrikeLabelString = [NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value];
-    NSLog([NSString stringWithFormat:@"%f", footStrikeCutoffSlider.value]);
+    _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
+    NSLog([NSString stringWithFormat:@"%.f", footStrikeCutoffSlider.value]);
     [footStrikeSliderLabel setText:_footStrikeLabelString];
 }
 

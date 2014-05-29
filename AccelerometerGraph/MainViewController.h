@@ -12,17 +12,17 @@
 	GraphView *unfiltered;
 	GraphView *filtered;
 	UIBarButtonItem *pause;
-//    UIButton *settingsButton;
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
 	BOOL isPaused, useAdaptive;
     double footStrikeCutoff;
-    
+    double toeOffCutoff;
+    BOOL footIsDown;
 }
 
-//@property(nonatomic) double *footStrikeCutoff;
+
 @property(nonatomic) BOOL *soundOn;
-@property(nonatomic) BOOL *footIsDown;
+
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;

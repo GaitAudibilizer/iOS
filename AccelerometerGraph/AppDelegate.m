@@ -5,20 +5,19 @@
 
 @synthesize window, /*viewController,*/ navController;
 
+//Set default user defaults
 +(void)initialize{
 
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:2], nil];
+                                 @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:.5],
+                                 @"toeOffCutoff", [NSNumber numberWithFloat:.5],
+                                 nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 
 -(void)applicationDidFinishLaunching:(UIApplication*)application
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-	// Add the view controller's view to the window
-//	[window addSubview:viewController.view];
-//    window.rootViewController = navController;
     
     UIViewController *cont=[[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
     self.navController=[[UINavigationController alloc]initWithRootViewController:cont];

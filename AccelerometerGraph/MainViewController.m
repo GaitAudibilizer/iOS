@@ -32,8 +32,10 @@
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    
+    //get cutoffs
     footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
+    
     _soundOn = [defaults boolForKey:@"soundOn"];
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
@@ -92,12 +94,19 @@
         //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
         if(self.soundOn){
+            //Check for footstrike
             if (acceleration.y > footStrikeCutoff) {
                 //play sound
                 AudioServicesPlaySystemSound (systemSoundID);
                 
                 //Foot is now down
-                self.footIsDown = YES;
+                footIsDown = YES;
+            }
+            
+            //Check for toe off
+            if (footIsDown && acceleration.x > toeOffCutoff) {
+                AudioServicesPlaySystemSound (systemSoundID);
+                footIsDown = NO;
             }
         }
         

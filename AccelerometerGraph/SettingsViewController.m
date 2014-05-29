@@ -30,8 +30,8 @@
     
     //Set slider parameters and update label
     footStrikeCutoffSlider.continuous = YES;
-    footStrikeCutoffSlider.minimumValue = 1;
-    footStrikeCutoffSlider.maximumValue = 4;
+    footStrikeCutoffSlider.minimumValue = 0;
+    footStrikeCutoffSlider.maximumValue = 2;
     
     //Fetch user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -53,7 +53,6 @@
 -(IBAction)soundOnOrOff:(id)sender
 {
     NSLog(@"Soundswitch pressed");
-    
     [self.delegate addItemViewController:self didFinishEnteringItem:soundSwitch.isOn];
     
     //Save settings to NSUserDeafaults

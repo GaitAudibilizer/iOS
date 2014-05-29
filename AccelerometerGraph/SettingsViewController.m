@@ -32,7 +32,13 @@
     footStrikeCutoffSlider.continuous = YES;
     footStrikeCutoffSlider.minimumValue = 1;
     footStrikeCutoffSlider.maximumValue = 4;
-    footStrikeCutoffSlider.value = 2;
+    
+    //Fetch user settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    footStrikeCutoffSlider.value = [defaults doubleForKey:@"footStrikeCutoff"];
+    [soundSwitch setOn:[defaults boolForKey:@"soundOn"]];
+    
+//    footStrikeCutoffSlider.value = 
     _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
     [footStrikeSliderLabel setText:_footStrikeLabelString];
     
@@ -49,7 +55,10 @@
     NSLog(@"Soundswitch pressed");
     
     [self.delegate addItemViewController:self didFinishEnteringItem:soundSwitch.isOn];
-//    [self dismissModalViewControllerAnimated:YES];
+    
+    //Save settings to NSUserDeafaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:soundSwitch.isOn forKey:@"soundOn"];
 }
 
 -(IBAction)footStrikeCutoffSelect:(id)sender
@@ -59,6 +68,9 @@
     [footStrikeSliderLabel setText:_footStrikeLabelString];
     [self.delegate setFootstrikeCutoff:self didFinishEnteringItem:(double)footStrikeCutoffSlider.value];
     
+    //Save settings to NSUserDeafaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setFloat:footStrikeCutoffSlider.value forKey:@"footStrikeCutoff"];
 }
 
 
@@ -69,6 +81,7 @@
     [footStrikeSliderLabel release];
     [super dealloc];
 }
+
 - (void)viewDidUnload {
     [self setSoundSwitch:nil];
     [self setFootStrikeCutoffSlider:nil];

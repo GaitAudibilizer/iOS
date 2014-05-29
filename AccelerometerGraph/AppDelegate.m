@@ -5,6 +5,13 @@
 
 @synthesize window, /*viewController,*/ navController;
 
++(void)initialize{
+
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:2], nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+}
+
 -(void)applicationDidFinishLaunching:(UIApplication*)application
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

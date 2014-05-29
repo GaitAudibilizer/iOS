@@ -28,11 +28,17 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
     
     //initialize ivariables
-    footStrikeCutoff = 2;
-    _soundOn = YES;
+    
+    //get user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+    _soundOn = [defaults boolForKey:@"soundOn"];
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
 	useAdaptive = NO;
+    
 	[self changeFilter:[LowpassFilter class]];
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:self];

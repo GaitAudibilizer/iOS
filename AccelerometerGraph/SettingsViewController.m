@@ -31,11 +31,11 @@
     //Set slider parameters
     footStrikeCutoffSlider.continuous = YES;
     footStrikeCutoffSlider.minimumValue = 0;
-    footStrikeCutoffSlider.maximumValue = 4;
+    footStrikeCutoffSlider.maximumValue = .5;
     
     _toeOffCutoffSlider.continuous = YES;
     _toeOffCutoffSlider.minimumValue = 0;
-    _toeOffCutoffSlider.maximumValue = 4;
+    _toeOffCutoffSlider.maximumValue = 2;
     
     //Fetch user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -70,7 +70,7 @@
 -(IBAction)footStrikeCutoffSelect:(id)sender
 {
     //update label
-    _footStrikeLabelString = [NSString stringWithFormat:@"%.2f", footStrikeCutoffSlider.value];
+    _footStrikeLabelString = [NSString stringWithFormat:@"%.4f", footStrikeCutoffSlider.value];
     NSLog([NSString stringWithFormat:@"%.3f", footStrikeCutoffSlider.value]);
     [footStrikeSliderLabel setText:_footStrikeLabelString];
     
@@ -81,7 +81,7 @@
 
 - (IBAction)toeOffCutoffSelect:(id)sender {
     //update label
-    _toeOffLabelString= [NSString stringWithFormat:@"%.2f", _toeOffCutoffSlider.value];
+    _toeOffLabelString= [NSString stringWithFormat:@"%.4f", _toeOffCutoffSlider.value];
     NSLog([NSString stringWithFormat:@"%.3f", _toeOffCutoffSlider.value]);
     [_toeOffSliderLabel setText:_toeOffLabelString];
     

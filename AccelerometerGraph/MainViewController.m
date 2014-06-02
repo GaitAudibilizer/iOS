@@ -164,10 +164,9 @@
     [filter addAcceleration:acceleration];
     [unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
     [filtered addX:filter.x y:filter.y z:filter.z];
-
     
     if(self.soundOn){
-        if(self.motionManager.accelerometerData.acceleration.y > footStrikeCutoff && footIsDown == NO){
+        if(filter.y > footStrikeCutoff){
             //play sound
             AudioServicesPlaySystemSound (systemSoundID);
             

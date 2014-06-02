@@ -22,12 +22,13 @@
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
+    NSLog(@"ViewDidLoad called on mainviewcontroller");
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
     
-    //initialize ivariables
+
     
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -72,13 +73,11 @@
 - (void)setFootstrikeCutoff:(SettingsViewController *)controller didFinishEnteringItem:(double)item
 {
     footStrikeCutoff = item;
-    NSLog([NSString stringWithFormat:@"%0.1f", footStrikeCutoff]);
+    NSLog(@"setfootstrikecutoff called");
 }
 
 -(void)viewDidUnload
 {
-    [self setSettingsButton:nil];
-    [self setSettingsButton:nil];
 	[super viewDidUnload];
 	self.unfiltered = nil;
 	self.filtered = nil;
@@ -89,6 +88,14 @@
 // UIAccelerometerDelegate method, called when the device accelerates.
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
+    //get user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //get cutoffs
+    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
+    _soundOn = [defaults boolForKey:@"soundOn"];
+    
 	// Update the accelerometer graph view
 	if(!isPaused)
 	{
@@ -99,18 +106,16 @@
         //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
         if(self.soundOn){
-            
             //Check for footstrike
-            if (filter.y > footStrikeCutoff && footIsDown == NO) {
+            if (acceleration.z > footStrikeCutoff) {
                 //play sound
                 AudioServicesPlaySystemSound (systemSoundID);
-                
                 //Foot is now down
                 footIsDown = YES;
             }
             
             //Check for toe off
-            if (footIsDown && filter.x > toeOffCutoff) {
+            if (footIsDown == YES && acceleration.x > toeOffCutoff) {
                 AudioServicesPlaySystemSound (systemSoundID+1);
                 footIsDown = NO;
             }
@@ -185,16 +190,6 @@
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
-//-(IBAction)settingsButton:(id)sender
-//{
-//    NSLog(@"settings button pressed");
-//
-//    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
-//    settingsViewController.delegate=self;
-//    [self.navigationController pushViewController:settingsViewController animated:YES];
-//    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-//}
-
 -(void)dealloc
 {
 	// clean up everything.
@@ -202,7 +197,6 @@
 	[filtered release];
 	[filterLabel release];
 	[pause release];
-//    [settingsButton release];
 	[super dealloc];
 }
 

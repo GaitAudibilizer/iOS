@@ -29,9 +29,6 @@
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *pause;
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
 
-
-@property (retain, nonatomic) IBOutlet UIButton *settingsButton;
-
 -(IBAction)pauseOrResume:(id)sender;
 -(IBAction)filterSelect:(id)sender;
 -(IBAction)adaptiveSelect:(id)sender;

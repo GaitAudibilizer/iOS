@@ -154,7 +154,6 @@
 		// If we are not paused, then pause and set the title to "Resume"
 		isPaused = YES;
 		pause.title = kLocalizedResume;
-        AudioServicesPlaySystemSound (systemSoundID);
 	}
 	
 	// Inform accessibility clients that the pause/resume button has changed.

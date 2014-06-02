@@ -28,20 +28,26 @@
 {
     [super viewDidLoad];
     
-    //Set slider parameters and update label
+    //Set slider parameters
     footStrikeCutoffSlider.continuous = YES;
     footStrikeCutoffSlider.minimumValue = 0;
-    footStrikeCutoffSlider.maximumValue = 2;
+    footStrikeCutoffSlider.maximumValue = 1;
+    
+    _toeOffCutoffSlider.continuous = YES;
+    _toeOffCutoffSlider.minimumValue = 0;
+    _toeOffCutoffSlider.maximumValue =1;
     
     //Fetch user settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     footStrikeCutoffSlider.value = [defaults doubleForKey:@"footStrikeCutoff"];
+    _toeOffCutoffSlider.value = [defaults doubleForKey:@"toeOffCutoff"];
     [soundSwitch setOn:[defaults boolForKey:@"soundOn"]];
     
-//    footStrikeCutoffSlider.value = 
-    _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
+    //Set label text
+    _toeOffLabelString = [NSString stringWithFormat:@"%0.2f", _toeOffCutoffSlider.value];
+    _footStrikeLabelString = [NSString stringWithFormat:@"%0.2f", footStrikeCutoffSlider.value];
     [footStrikeSliderLabel setText:_footStrikeLabelString];
-    
+    [_toeOffSliderLabel setText:_footStrikeLabelString];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,6 +55,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 -(IBAction)soundOnOrOff:(id)sender
 {
@@ -62,22 +69,35 @@
 
 -(IBAction)footStrikeCutoffSelect:(id)sender
 {
-    _footStrikeLabelString = [NSString stringWithFormat:@"%0.1f", footStrikeCutoffSlider.value];
+    //update label
+    _footStrikeLabelString = [NSString stringWithFormat:@"%.2f", footStrikeCutoffSlider.value];
     NSLog([NSString stringWithFormat:@"%.f", footStrikeCutoffSlider.value]);
     [footStrikeSliderLabel setText:_footStrikeLabelString];
-    [self.delegate setFootstrikeCutoff:self didFinishEnteringItem:(double)footStrikeCutoffSlider.value];
     
     //Save settings to NSUserDeafaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setFloat:footStrikeCutoffSlider.value forKey:@"footStrikeCutoff"];
 }
 
+- (IBAction)toeOffCutoffSelect:(id)sender {
+    //update label
+    _toeOffLabelString= [NSString stringWithFormat:@"%.2f", _toeOffCutoffSlider.value];
+    NSLog([NSString stringWithFormat:@"%.2f", _toeOffCutoffSlider.value]);
+    [_toeOffSliderLabel setText:_toeOffLabelString];
+    
+    //Save settings to NSUserDeafaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setFloat:_toeOffCutoffSlider.value forKey:@"toeOffCutoff"];
+}
 
 - (void)dealloc {
     [soundSwitch release];
     [footStrikeCutoffSlider release];
     [footStrikeSliderLabel release];
     [footStrikeSliderLabel release];
+    [_toeOffCutoffSlider release];
+    [_toeOffCutoffSlider release];
+    [_toeOffSliderLabel release];
     [super dealloc];
 }
 
@@ -85,6 +105,8 @@
     [self setSoundSwitch:nil];
     [self setFootStrikeCutoffSlider:nil];
     [self setFootStrikeSliderLabel:nil];
+    [self setToeOffCutoffSlider:nil];
+    [self setToeOffSliderLabel:nil];
     [super viewDidUnload];
 }
 @end

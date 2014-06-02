@@ -40,6 +40,7 @@
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
 	useAdaptive = NO;
+    footIsDown = NO;
     
 	[self changeFilter:[LowpassFilter class]];
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
@@ -91,11 +92,16 @@
 	// Update the accelerometer graph view
 	if(!isPaused)
 	{
+        [filter addAcceleration:acceleration];
+		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
+		[filtered addX:filter.x y:filter.y z:filter.z];
+        
         //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
         if(self.soundOn){
+            
             //Check for footstrike
-            if (acceleration.y > footStrikeCutoff) {
+            if (filter.y > footStrikeCutoff && footIsDown == NO) {
                 //play sound
                 AudioServicesPlaySystemSound (systemSoundID);
                 
@@ -104,15 +110,13 @@
             }
             
             //Check for toe off
-            if (footIsDown && acceleration.x > toeOffCutoff) {
-                AudioServicesPlaySystemSound (systemSoundID);
+            if (footIsDown && filter.x > toeOffCutoff) {
+                AudioServicesPlaySystemSound (systemSoundID+1);
                 footIsDown = NO;
             }
         }
         
-		[filter addAcceleration:acceleration];
-		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
-		[filtered addX:filter.x y:filter.y z:filter.z];
+		
 	}
 }
 

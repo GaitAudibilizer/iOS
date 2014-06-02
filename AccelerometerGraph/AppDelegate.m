@@ -9,8 +9,8 @@
 +(void)initialize{
 
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:.5],
-                                 @"toeOffCutoff", [NSNumber numberWithFloat:.5],
+                                 @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:.065],
+                                 @"toeOffCutoff", [NSNumber numberWithFloat:.05],
                                  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }

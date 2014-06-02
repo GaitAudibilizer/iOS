@@ -11,6 +11,7 @@
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
                                  @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:.065],
                                  @"toeOffCutoff", [NSNumber numberWithFloat:.05],
+                                 @"gyroCutoff", [NSNumber numberWithFloat:.05],
                                  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }

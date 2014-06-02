@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "SettingsViewController.h"
+#import <CoreMotion/CoreMotion.h>
 
 @class GraphView;
 @class AccelerometerFilter;
@@ -28,6 +29,8 @@
 @property(nonatomic, retain) IBOutlet GraphView *filtered;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *pause;
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
+
+@property (strong, nonatomic) CMMotionManager *motionManager;
 
 -(IBAction)pauseOrResume:(id)sender;
 -(IBAction)filterSelect:(id)sender;

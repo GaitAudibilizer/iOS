@@ -26,9 +26,17 @@
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
+    //Start motionManager for gyro data
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.accelerometerUpdateInterval = .2;
+    self.motionManager.gyroUpdateInterval = .2;
     
-
+    [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
+                                    withHandler:^(CMGyroData *gyroData, NSError *error) {
+                                        [self outputRotationData:gyroData.rotationRate];
+                                    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
     
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -40,10 +48,10 @@
     _soundOn = [defaults boolForKey:@"soundOn"];
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	isPaused = NO;
-	useAdaptive = NO;
+	useAdaptive = YES;
     footIsDown = NO;
     
-	[self changeFilter:[LowpassFilter class]];
+	[self changeFilter:[HighpassFilter class]];
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 	
@@ -85,6 +93,7 @@
 	self.filterLabel = nil;
 }
 
+
 // UIAccelerometerDelegate method, called when the device accelerates.
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
@@ -106,23 +115,36 @@
         //Play tone if acceleration is greater than cutoff value and sound is turned on
         //More complete step detection will be added here later
         if(self.soundOn){
+            
             //Check for footstrike
-            if (acceleration.z > footStrikeCutoff) {
+            if (filter.y > footStrikeCutoff && footIsDown == NO) {
+                
                 //play sound
                 AudioServicesPlaySystemSound (systemSoundID);
+                
                 //Foot is now down
                 footIsDown = YES;
             }
             
             //Check for toe off
-            if (footIsDown == YES && acceleration.x > toeOffCutoff) {
-                AudioServicesPlaySystemSound (systemSoundID+1);
-                footIsDown = NO;
-            }
+//            if (footIsDown == YES && filter.x > toeOffCutoff && filter.y < footStrikeCutoff) {
+////                AudioServicesPlaySystemSound (systemSoundID+1);
+//                footIsDown = NO;
+//            }
         }
         
 		
 	}
+}
+
+//Called when device rotates
+-(void)outputRotationData:(CMRotationRate)rotation
+{
+    if (rotation.z > toeOffCutoff) {
+        AudioServicesPlaySystemSound (systemSoundID+1);
+        footIsDown = NO;
+    }
+    
 }
 
 -(void)changeFilter:(Class)filterClass

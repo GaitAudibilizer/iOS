@@ -6,7 +6,7 @@
 
 @synthesize x, y, z, adaptive;
 
--(void)addAcceleration:(UIAcceleration*)accel
+-(void)addAcceleration:(CMAcceleration)accel
 {
 	x = accel.x;
 	y = accel.y;
@@ -53,7 +53,7 @@ double Clamp(double v, double min, double max)
 	return self;
 }
 
--(void)addAcceleration:(UIAcceleration*)accel
+-(void)addAcceleration:(CMAcceleration)accel
 {
 	double alpha = filterConstant;
 	
@@ -90,7 +90,7 @@ double Clamp(double v, double min, double max)
 	return self;
 }
 
--(void)addAcceleration:(UIAcceleration*)accel
+-(void)addAcceleration:(CMAcceleration)accel
 {
 	double alpha = filterConstant;
 	

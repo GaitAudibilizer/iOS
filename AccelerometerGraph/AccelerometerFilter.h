@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <CoreMotion/CoreMotion.h>
 
 // Basic filter object. 
 @interface AccelerometerFilter : NSObject
@@ -8,7 +9,7 @@
 }
 
 // Add a UIAcceleration to the filter.
--(void)addAcceleration:(UIAcceleration*)accel;
+-(void)addAcceleration:(CMAcceleration)accel;
 
 @property(nonatomic, readonly) UIAccelerationValue x;
 @property(nonatomic, readonly) UIAccelerationValue y;

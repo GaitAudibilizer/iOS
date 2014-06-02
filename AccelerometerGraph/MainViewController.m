@@ -26,11 +26,23 @@
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
-    //Start motionManager for gyro data
+    //Start motionManager
     self.motionManager = [[CMMotionManager alloc] init];
-    self.motionManager.accelerometerUpdateInterval = .2;
-    self.motionManager.gyroUpdateInterval = .2;
+    self.motionManager.accelerometerUpdateInterval = .001;
+    self.motionManager.gyroUpdateInterval = .001;
     
+    //accelerometer motion manager
+//    [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
+//                                             withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
+//                                                 [self outputAccelertionData:accelerometerData.acceleration];
+//                                                 if(error){
+//                                                     
+//                                                     NSLog(@"%@", error);
+//                                                 }
+//                                             }];
+    
+    [self.motionManager startAccelerometerUpdates];
+    //gyro motion manager
     [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
                                     withHandler:^(CMGyroData *gyroData, NSError *error) {
                                         [self outputRotationData:gyroData.rotationRate];
@@ -95,7 +107,50 @@
 
 
 // UIAccelerometerDelegate method, called when the device accelerates.
--(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+//-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+//{
+//    //get user defaults
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    
+//    //get cutoffs
+//    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+//    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
+//    _soundOn = [defaults boolForKey:@"soundOn"];
+//    
+//	// Update the accelerometer graph view
+//	if(!isPaused)
+//	{
+//        [filter addAcceleration:acceleration];
+//		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
+//		[filtered addX:filter.x y:filter.y z:filter.z];
+//        
+//        //Play tone if acceleration is greater than cutoff value and sound is turned on
+//        //More complete step detection will be added here later
+//        if(self.soundOn){
+//            
+//            //Check for footstrike
+//            if (filter.y > footStrikeCutoff && footIsDown == NO) {
+//                
+//                //play sound
+//                AudioServicesPlaySystemSound (systemSoundID);
+//                
+//                //Foot is now down
+//                footIsDown = YES;
+//            }
+//            
+//            //Check for toe off
+////            if (footIsDown == YES && filter.x > toeOffCutoff && filter.y < footStrikeCutoff) {
+//////                AudioServicesPlaySystemSound (systemSoundID+1);
+////                footIsDown = NO;
+////            }
+//        }
+//        
+//		
+//	}
+//}
+
+//Output motion data
+-(void)outputRotationData:(CMRotationRate)rotation
 {
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -104,46 +159,30 @@
     footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
     toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
     _soundOn = [defaults boolForKey:@"soundOn"];
+    CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
     
-	// Update the accelerometer graph view
-	if(!isPaused)
-	{
-        [filter addAcceleration:acceleration];
-		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
-		[filtered addX:filter.x y:filter.y z:filter.z];
-        
-        //Play tone if acceleration is greater than cutoff value and sound is turned on
-        //More complete step detection will be added here later
-        if(self.soundOn){
+    [filter addAcceleration:acceleration];
+    [unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
+    [filtered addX:filter.x y:filter.y z:filter.z];
+
+    
+    if(self.soundOn){
+        if(self.motionManager.accelerometerData.acceleration.y > footStrikeCutoff && footIsDown == NO){
+            //play sound
+            AudioServicesPlaySystemSound (systemSoundID);
             
-            //Check for footstrike
-            if (filter.y > footStrikeCutoff && footIsDown == NO) {
-                
-                //play sound
-                AudioServicesPlaySystemSound (systemSoundID);
-                
-                //Foot is now down
-                footIsDown = YES;
-            }
-            
-            //Check for toe off
-//            if (footIsDown == YES && filter.x > toeOffCutoff && filter.y < footStrikeCutoff) {
-////                AudioServicesPlaySystemSound (systemSoundID+1);
-//                footIsDown = NO;
-//            }
+            //Foot is now down
+            footIsDown = YES;
         }
         
-		
-	}
-}
-
-//Called when device rotates
--(void)outputRotationData:(CMRotationRate)rotation
-{
-    if (rotation.z > toeOffCutoff) {
-        AudioServicesPlaySystemSound (systemSoundID+1);
-        footIsDown = NO;
+        
+        if (rotation.z > toeOffCutoff && footIsDown == YES) {
+            AudioServicesPlaySystemSound (systemSoundID+1);
+            footIsDown = NO;
+        }
     }
+    
+
     
 }
 

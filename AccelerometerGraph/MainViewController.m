@@ -105,50 +105,6 @@
 	self.filterLabel = nil;
 }
 
-
-// UIAccelerometerDelegate method, called when the device accelerates.
-//-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
-//{
-//    //get user defaults
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    
-//    //get cutoffs
-//    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
-//    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
-//    _soundOn = [defaults boolForKey:@"soundOn"];
-//    
-//	// Update the accelerometer graph view
-//	if(!isPaused)
-//	{
-//        [filter addAcceleration:acceleration];
-//		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
-//		[filtered addX:filter.x y:filter.y z:filter.z];
-//        
-//        //Play tone if acceleration is greater than cutoff value and sound is turned on
-//        //More complete step detection will be added here later
-//        if(self.soundOn){
-//            
-//            //Check for footstrike
-//            if (filter.y > footStrikeCutoff && footIsDown == NO) {
-//                
-//                //play sound
-//                AudioServicesPlaySystemSound (systemSoundID);
-//                
-//                //Foot is now down
-//                footIsDown = YES;
-//            }
-//            
-//            //Check for toe off
-////            if (footIsDown == YES && filter.x > toeOffCutoff && filter.y < footStrikeCutoff) {
-//////                AudioServicesPlaySystemSound (systemSoundID+1);
-////                footIsDown = NO;
-////            }
-//        }
-//        
-//		
-//	}
-//}
-
 //Output motion data
 -(void)outputRotationData:(CMRotationRate)rotation
 {
@@ -183,9 +139,26 @@
             footIsDown = NO;
         }
     }
-    
+}
 
-    
+-(IBAction)recordSelect:(id)sender
+{
+    NSLog(@"recording");
+	if(recordOn)
+	{
+		// If we're recording, end recording and prompt for filename
+		recordOn = NO;
+		record.title = @"Record";
+	}
+	else
+	{
+		// Start recording
+		recordOn = YES;
+		record.title = @"Stop Recording";
+	}
+	
+	// Inform accessibility clients that the pause/resume button has changed.
+	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
 -(void)changeFilter:(Class)filterClass
@@ -201,26 +174,6 @@
 		// And update the filterLabel with the new filter name.
 		filterLabel.text = filter.name;
 	}
-}
-
--(IBAction)recordSelect:(id)sender
-{
-    NSLog(@"recording");
-	if(recordOn)
-	{
-		// If we're recording, end recording and prompt for filename
-		recordOn = NO;
-		record.title = @"Record";
-	}
-	else
-	{
-		// If we are not paused, then pause and set the title to "Resume"
-		recordOn = YES;
-		record.title = @"Stop Recording";
-	}
-	
-	// Inform accessibility clients that the pause/resume button has changed.
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
 -(IBAction)filterSelect:(id)sender

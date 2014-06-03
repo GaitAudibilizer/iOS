@@ -22,11 +22,11 @@
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
-    outputString = @"";
     NSLog(@"ViewDidLoad called on mainviewcontroller");
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
+    outputString = [[NSMutableString alloc] init];
     //Start motionManager and set timestep
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.accelerometerUpdateInterval = .001;
@@ -50,7 +50,6 @@
     toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
     
     _soundOn = [defaults boolForKey:@"soundOn"];
-	record.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
 	recordOn = NO;
 	useAdaptive = YES;
     footIsDown = NO;
@@ -115,7 +114,8 @@
     [filtered addX:filter.x y:filter.y z:filter.z];
     
     if (recordOn) {
-        outputString = [outputString stringByAppendingFormat:@"%f,%f,%f,%f\n",
+    NSLog(@"%@",outputString);
+    [outputString appendFormat:@"%f,%f,%f,%f\n",
                         acceleration.x, acceleration.y, acceleration.z,rotation.z];
     }
     
@@ -158,6 +158,7 @@
 
 }
 
+//Delegate for the alert window that pops up when recording stops
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 420) {
@@ -171,14 +172,15 @@
             NSString *docDirectory = [paths objectAtIndex:0];
             
             NSString *outputFileName = [NSString stringWithFormat:@"%@/%@", docDirectory, self->fileName];
-            
             NSLog(@"Output file name: %@", outputFileName);
             
             //Create an error incase something goes wrong
-            NSError *csvError = NULL;
+            NSError *csvError = nil;
             
             //We write the string to a file and assign it's return to a boolean
-            BOOL written = [outputString writeToFile:outputFileName atomically:YES encoding:NSUTF8StringEncoding error:&csvError];
+            NSString *nonMutableString = [NSString stringWithFormat:@"%@",outputString];
+            NSLog(@"%@",outputString);
+            BOOL written = [nonMutableString writeToFile:outputFileName atomically:YES encoding:NSUTF8StringEncoding error:&csvError];
             
             //If there was a problem saving we show the error if not show success and file path
             if (!written)
@@ -187,7 +189,7 @@
                 NSLog(@"Saved! File path =%@", outputFileName);
             
             //reset output string
-            outputString = @"";
+            [outputString setString:@""];
         }
     }
 }
@@ -243,6 +245,7 @@
 	[filtered release];
 	[filterLabel release];
 	[record release];
+    [outputString release];
 	[super dealloc];
 }
 

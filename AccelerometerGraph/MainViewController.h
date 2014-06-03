@@ -15,7 +15,7 @@
 	UIBarButtonItem *record;
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
-    NSString* outputString;
+    NSMutableString* outputString;
     NSString* fileName;
 	BOOL recordOn, useAdaptive;
     double footStrikeCutoff;

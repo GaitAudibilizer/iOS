@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="filterLabel" destination="45" id="94"/>
                 <outlet property="filtered" destination="22" id="98"/>
-                <outlet property="pause" destination="17" id="99"/>
+                <outlet property="record" destination="17" id="PW8-Ms-NaD"/>
                 <outlet property="unfiltered" destination="21" id="97"/>
                 <outlet property="view" destination="14" id="93"/>
             </connections>
@@ -24,9 +24,9 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="26"/>
-                        <barButtonItem title="Pause" id="17">
+                        <barButtonItem title="Record" id="17">
                             <connections>
-                                <action selector="pauseOrResume:" destination="-1" id="100"/>
+                                <action selector="recordSelect:" destination="-1" id="hQ4-wQ-FDw"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="25"/>

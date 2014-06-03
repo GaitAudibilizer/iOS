@@ -12,10 +12,11 @@
 {
 	GraphView *unfiltered;
 	GraphView *filtered;
-	UIBarButtonItem *pause;
+	UIBarButtonItem *record;
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
-	BOOL isPaused, useAdaptive;
+    NSString* outputString;
+	BOOL recordOn, useAdaptive;
     double footStrikeCutoff;
     double toeOffCutoff;
     BOOL footIsDown;
@@ -27,12 +28,12 @@
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;
-@property(nonatomic, retain) IBOutlet UIBarButtonItem *pause;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *record;
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
 
 @property (strong, nonatomic) CMMotionManager *motionManager;
 
--(IBAction)pauseOrResume:(id)sender;
+-(IBAction)recordSelect:(id)sender;
 -(IBAction)filterSelect:(id)sender;
 -(IBAction)adaptiveSelect:(id)sender;
 

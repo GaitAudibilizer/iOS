@@ -17,15 +17,15 @@
 
 @implementation MainViewController
 
-@synthesize unfiltered, filtered, pause, filterLabel/*, settingsButton*/;
+@synthesize unfiltered, filtered, record, filterLabel/*, settingsButton*/;
 
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
+    outputString = @"";
     NSLog(@"ViewDidLoad called on mainviewcontroller");
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
-    
     //Start motionManager
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.accelerometerUpdateInterval = .001;
@@ -58,8 +58,8 @@
     toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
     
     _soundOn = [defaults boolForKey:@"soundOn"];
-	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
-	isPaused = NO;
+	record.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
+	recordOn = NO;
 	useAdaptive = YES;
     footIsDown = NO;
     
@@ -101,7 +101,7 @@
 	[super viewDidUnload];
 	self.unfiltered = nil;
 	self.filtered = nil;
-	self.pause = nil;
+	self.record = nil;
 	self.filterLabel = nil;
 }
 
@@ -159,22 +159,25 @@
     footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
     toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
     _soundOn = [defaults boolForKey:@"soundOn"];
-    CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
     
+    //update graphs
+    CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
     [filter addAcceleration:acceleration];
     [unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
     [filtered addX:filter.x y:filter.y z:filter.z];
+    
+    if (recordOn) {
+        outputString = [outputString stringByAppendingFormat:@"%f,%f,%f,%f\n",
+                        acceleration.x, acceleration.y, acceleration.z,rotation.z];
+    }
     
     if(self.soundOn){
         if(filter.y > footStrikeCutoff){
             //play sound
             AudioServicesPlaySystemSound (systemSoundID);
-            
             //Foot is now down
             footIsDown = YES;
         }
-        
-        
         if (rotation.z > toeOffCutoff && footIsDown == YES) {
             AudioServicesPlaySystemSound (systemSoundID+1);
             footIsDown = NO;
@@ -200,20 +203,20 @@
 	}
 }
 
--(IBAction)pauseOrResume:(id)sender
+-(IBAction)recordSelect:(id)sender
 {
-    NSLog(@"pausing");
-	if(isPaused)
+    NSLog(@"recording");
+	if(recordOn)
 	{
-		// If we're paused, then resume and set the title to "Pause"
-		isPaused = NO;
-		pause.title = kLocalizedPause;
+		// If we're recording, end recording and prompt for filename
+		recordOn = NO;
+		record.title = @"Record";
 	}
 	else
 	{
 		// If we are not paused, then pause and set the title to "Resume"
-		isPaused = YES;
-		pause.title = kLocalizedResume;
+		recordOn = YES;
+		record.title = @"Stop Recording";
 	}
 	
 	// Inform accessibility clients that the pause/resume button has changed.
@@ -255,7 +258,7 @@
 	[unfiltered release];
 	[filtered release];
 	[filterLabel release];
-	[pause release];
+	[record release];
 	[super dealloc];
 }
 

@@ -103,9 +103,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //get cutoffs
-    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
-    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
-    _soundOn = [defaults boolForKey:@"soundOn"];
+//    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+//    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
+//    _soundOn = [defaults boolForKey:@"soundOn"];
     
     //update graphs
     CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
@@ -114,19 +114,19 @@
     [filtered addX:filter.x y:filter.y z:filter.z];
     
     if (recordOn) {
-    NSLog(@"%@",outputString);
+//    NSLog(@"%@",outputString);
     [outputString appendFormat:@"%f,%f,%f,%f\n",
                         acceleration.x, acceleration.y, acceleration.z,rotation.z];
     }
     
-    if(self.soundOn){
-        if(filter.y > footStrikeCutoff){
+    if([defaults boolForKey:@"soundOn"]){
+        if(filter.y > [defaults doubleForKey:@"footStrikeCutoff"]){
             //play sound
             AudioServicesPlaySystemSound (systemSoundID);
             //Foot is now down
             footIsDown = YES;
         }
-        if (rotation.z > toeOffCutoff && footIsDown == YES) {
+        if (rotation.z > [defaults doubleForKey:@"toeOffCutoff"] && footIsDown == YES) {
             AudioServicesPlaySystemSound (systemSoundID+1);
             footIsDown = NO;
         }

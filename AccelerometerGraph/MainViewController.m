@@ -26,21 +26,13 @@
     NSLog(@"ViewDidLoad called on mainviewcontroller");
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
-    //Start motionManager
+    
+    //Start motionManager and set timestep
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.accelerometerUpdateInterval = .001;
     self.motionManager.gyroUpdateInterval = .001;
     
-    //accelerometer motion manager
-//    [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
-//                                             withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
-//                                                 [self outputAccelertionData:accelerometerData.acceleration];
-//                                                 if(error){
-//                                                     
-//                                                     NSLog(@"%@", error);
-//                                                 }
-//                                             }];
-    
+    //Accelerometer motion manager
     [self.motionManager startAccelerometerUpdates];
     //gyro motion manager
     [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
@@ -146,9 +138,24 @@
     NSLog(@"recording");
 	if(recordOn)
 	{
-		// If we're recording, end recording and prompt for filename
+		// If we're recording, end recording and save file
 		recordOn = NO;
 		record.title = @"Record";
+        
+        //Find directory for saving documents
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDirectory = [paths objectAtIndex:0];
+        
+        //Prompt for filename
+        UIAlertView * saveAlert = [[UIAlertView alloc] initWithTitle:@"Save File" message:@"Please enter a filename or press cancel" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
+        saveAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        saveAlert.tag = 420; //lol
+        
+        [saveAlert show];
+        
+        
+        
+        outputString = @"";
 	}
 	else
 	{
@@ -156,9 +163,18 @@
 		recordOn = YES;
 		record.title = @"Stop Recording";
 	}
-	
-	// Inform accessibility clients that the pause/resume button has changed.
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 420) {
+        if (buttonIndex == 0) {
+            UITextField *textfield = [alertView textFieldAtIndex:0];
+            fileName = textfield.text;
+            NSLog(@"filename: %@", fileName);
+        }
+    }
 }
 
 -(void)changeFilter:(Class)filterClass

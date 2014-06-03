@@ -16,6 +16,7 @@
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
     NSString* outputString;
+    NSString* fileName;
 	BOOL recordOn, useAdaptive;
     double footStrikeCutoff;
     double toeOffCutoff;

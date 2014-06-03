@@ -142,20 +142,12 @@
 		recordOn = NO;
 		record.title = @"Record";
         
-        //Find directory for saving documents
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDirectory = [paths objectAtIndex:0];
-        
         //Prompt for filename
         UIAlertView * saveAlert = [[UIAlertView alloc] initWithTitle:@"Save File" message:@"Please enter a filename or press cancel" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
         saveAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        saveAlert.tag = 420; //lol
-        
+        saveAlert.tag = 420; //blazeit
         [saveAlert show];
         
-        
-        
-        outputString = @"";
 	}
 	else
 	{
@@ -171,8 +163,31 @@
     if (alertView.tag == 420) {
         if (buttonIndex == 0) {
             UITextField *textfield = [alertView textFieldAtIndex:0];
-            fileName = textfield.text;
+            fileName = [textfield.text stringByAppendingString:@".csv"];
             NSLog(@"filename: %@", fileName);
+            
+            //Find directory for saving documents
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *docDirectory = [paths objectAtIndex:0];
+            
+            NSString *outputFileName = [NSString stringWithFormat:@"%@/%@", docDirectory, self->fileName];
+            
+            NSLog(@"Output file name: %@", outputFileName);
+            
+            //Create an error incase something goes wrong
+            NSError *csvError = NULL;
+            
+            //We write the string to a file and assign it's return to a boolean
+            BOOL written = [outputString writeToFile:outputFileName atomically:YES encoding:NSUTF8StringEncoding error:&csvError];
+            
+            //If there was a problem saving we show the error if not show success and file path
+            if (!written)
+                NSLog(@"write failed, error=%@", csvError);
+            else
+                NSLog(@"Saved! File path =%@", outputFileName);
+            
+            //reset output string
+            outputString = @"";
         }
     }
 }

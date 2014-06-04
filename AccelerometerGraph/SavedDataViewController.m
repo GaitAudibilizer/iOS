@@ -49,9 +49,18 @@
     [picker setSubject:@"Gait data from GaitAudibilizer"];
     
     // Attach an image to the email
-    NSData*myData = nil;
     
-    [picker addAttachmentData:myData mimeType:@"image/png" fileName:@"coolImage.png"];
+    for (NSInteger i = 0; i<selectedArray.count; i++) {
+        NSLog(@"%@", [selectedArray objectAtIndex:i]);
+        if ([[selectedArray objectAtIndex:i] boolValue]==YES) {
+            NSString *fileName=[dataArray objectAtIndex:i];
+            NSString *path=[[self filePath]stringByAppendingPathComponent:fileName];
+            NSData*myData = [NSData dataWithContentsOfFile:path];
+            [picker addAttachmentData:myData mimeType:@"text/csv" fileName:fileName];
+        }
+    }
+    
+    
     
     // Fill out the email body text
     NSString *emailBody = @"Gait data is attached as csv files. The first 3 columns are x,y, and z acceleration in g's and\
@@ -91,8 +100,6 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[dataArray objectAtIndex:indexPath.row]];
-    
-    
     return cell;
 }
 
@@ -117,10 +124,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        
-        //Delete row from view
-        
         
         //Delete csv file
         NSString *fileName=[dataArray objectAtIndex:indexPath.row];
@@ -142,7 +145,6 @@
             [alertView show];
         }
     }
-    
 }
 
 
@@ -181,9 +183,8 @@
         [selectedArray replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
     }else {
         newCell.accessoryType = UITableViewCellAccessoryNone;
-        [selectedArray replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
+        [selectedArray replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
     }
-    
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error

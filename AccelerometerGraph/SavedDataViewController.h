@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SavedDataViewController : UIViewController
+@interface SavedDataViewController : UITableViewController{
+    NSArray *dataArray;
+}
+
+
 
 @end

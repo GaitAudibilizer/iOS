@@ -20,11 +20,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		30D873970D76212900B213B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D873960D76212900B213B8 /* AppDelegate.m */; };
-		342786A2192ACE8900A8804F /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 342786A0192ACE8900A8804F /* SettingsViewController.xib */; };
 		342786A7192ADB3200A8804F /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342786A6192ADB3200A8804F /* SettingsViewController.m */; };
 		3467D282193C73020047650E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3467D281193C73020047650E /* CoreMotion.framework */; };
-		3467D286193E95840047650E /* SavedDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3467D284193E95840047650E /* SavedDataViewController.m */; };
-		3467D287193E95840047650E /* SavedDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3467D285193E95840047650E /* SavedDataViewController.xib */; };
+		34C2E66A193E9D6000D87769 /* SavedDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C2E668193E9D6000D87769 /* SavedDataViewController.m */; };
+		34C2E66C193EA35500D87769 /* SavedDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C2E669193E9D6000D87769 /* SavedDataViewController.xib */; };
+		34C2E66D193EA39F00D87769 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 342786A0192ACE8900A8804F /* SettingsViewController.xib */; };
 		3C757D751909D42400CEEA2C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C757D741909D42400CEEA2C /* AudioToolbox.framework */; };
 		6390467F0F7C386600F2FB94 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6390467E0F7C386600F2FB94 /* MainViewController.m */; };
 		639046B00F7C400300F2FB94 /* AccelerometerFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 639046AF0F7C400300F2FB94 /* AccelerometerFilter.m */; };
@@ -56,9 +56,9 @@
 		342786A5192ADB3200A8804F /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		342786A6192ADB3200A8804F /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		3467D281193C73020047650E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		3467D283193E95840047650E /* SavedDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDataViewController.h; sourceTree = "<group>"; };
-		3467D284193E95840047650E /* SavedDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedDataViewController.m; sourceTree = "<group>"; };
-		3467D285193E95840047650E /* SavedDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SavedDataViewController.xib; sourceTree = "<group>"; };
+		34C2E667193E9D6000D87769 /* SavedDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDataViewController.h; sourceTree = "<group>"; };
+		34C2E668193E9D6000D87769 /* SavedDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedDataViewController.m; sourceTree = "<group>"; };
+		34C2E669193E9D6000D87769 /* SavedDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SavedDataViewController.xib; sourceTree = "<group>"; };
 		3C757D741909D42400CEEA2C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6390467D0F7C386600F2FB94 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		6390467E0F7C386600F2FB94 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -132,9 +132,9 @@
 				63ABFA420FDDCA4800218D27 /* MainViewController.xib */,
 				14D2E8F80DEF831F00195E03 /* MainWindow.xib */,
 				342786A0192ACE8900A8804F /* SettingsViewController.xib */,
+				34C2E669193E9D6000D87769 /* SavedDataViewController.xib */,
 				639A50B80FDB1BC9007BE898 /* Localizable.strings */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				3467D285193E95840047650E /* SavedDataViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -155,6 +155,8 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				34C2E667193E9D6000D87769 /* SavedDataViewController.h */,
+				34C2E668193E9D6000D87769 /* SavedDataViewController.m */,
 				342786A5192ADB3200A8804F /* SettingsViewController.h */,
 				342786A6192ADB3200A8804F /* SettingsViewController.m */,
 				639046AE0F7C400300F2FB94 /* AccelerometerFilter.h */,
@@ -163,8 +165,6 @@
 				30D873960D76212900B213B8 /* AppDelegate.m */,
 				6390467D0F7C386600F2FB94 /* MainViewController.h */,
 				6390467E0F7C386600F2FB94 /* MainViewController.m */,
-				3467D283193E95840047650E /* SavedDataViewController.h */,
-				3467D284193E95840047650E /* SavedDataViewController.m */,
 				6390470B0F7C4B3B00F2FB94 /* GraphView.h */,
 				6390470C0F7C4B3B00F2FB94 /* GraphView.m */,
 			);
@@ -229,14 +229,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C2E66C193EA35500D87769 /* SavedDataViewController.xib in Resources */,
 				14D2E8F90DEF831F00195E03 /* MainWindow.xib in Resources */,
 				639A50BA0FDB1BC9007BE898 /* Localizable.strings in Resources */,
-				342786A2192ACE8900A8804F /* SettingsViewController.xib in Resources */,
 				63ABFA440FDDCA4800218D27 /* MainViewController.xib in Resources */,
-				3467D287193E95840047650E /* SavedDataViewController.xib in Resources */,
 				18AD69BC11D559E7005232E4 /* Icon-72.png in Resources */,
 				18AD69BD11D559E7005232E4 /* Icon-Small-50.png in Resources */,
 				18AD69BE11D559E7005232E4 /* Icon-Small.png in Resources */,
+				34C2E66D193EA39F00D87769 /* SettingsViewController.xib in Resources */,
 				18AD69BF11D559E7005232E4 /* Icon-Small@2x.png in Resources */,
 				18AD69C011D559E7005232E4 /* Icon.png in Resources */,
 				18AD69C111D559E7005232E4 /* Icon@2x.png in Resources */,
@@ -257,7 +257,7 @@
 				342786A7192ADB3200A8804F /* SettingsViewController.m in Sources */,
 				639046B00F7C400300F2FB94 /* AccelerometerFilter.m in Sources */,
 				6390470D0F7C4B3B00F2FB94 /* GraphView.m in Sources */,
-				3467D286193E95840047650E /* SavedDataViewController.m in Sources */,
+				34C2E66A193E9D6000D87769 /* SavedDataViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

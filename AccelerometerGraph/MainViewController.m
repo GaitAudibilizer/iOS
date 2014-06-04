@@ -17,7 +17,7 @@
 
 @implementation MainViewController
 
-@synthesize unfiltered, filtered, record, filterLabel/*, settingsButton*/;
+@synthesize unfiltered, filtered, record, filterLabel;
 
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
@@ -41,6 +41,9 @@
                                     }];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(goToSavedData)];
+    
     
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -66,11 +69,17 @@
     
 }
 
+-(void) goToSavedData{
+    SavedDataViewController *savedDataViewController = [[SavedDataViewController alloc]
+        initWithNibName:@"SavedDataViewController"bundle:nil];
+    [self.navigationController pushViewController:savedDataViewController animated:YES];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+}
+
 -(void) goToSettings {
     NSLog(@"settings button pressed");
     
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
-    settingsViewController.delegate=self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }

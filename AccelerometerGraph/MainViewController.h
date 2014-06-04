@@ -2,13 +2,14 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "SettingsViewController.h"
+#import "SavedDataViewController.h"
 #import <CoreMotion/CoreMotion.h>
 
 @class GraphView;
 @class AccelerometerFilter;
 
 
-@interface MainViewController : UIViewController<UIAccelerometerDelegate, SettingsViewControllerDelegate>
+@interface MainViewController : UIViewController<UIAccelerometerDelegate>
 {
 	GraphView *unfiltered;
 	GraphView *filtered;

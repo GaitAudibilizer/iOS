@@ -12,6 +12,7 @@
                                  @"soundOn", [NSNumber numberWithBool:YES], @"footStrikeCutoff", [NSNumber numberWithFloat:.065],
                                  @"toeOffCutoff", [NSNumber numberWithFloat:.05],
                                  @"gyroCutoff", [NSNumber numberWithFloat:.05],
+                                 @"soundSet", [NSNumber numberWithInt:0],
                                  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }

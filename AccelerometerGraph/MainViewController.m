@@ -5,7 +5,7 @@
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Pause","pause taking samples")
 #define kLocalizedResume	NSLocalizedString(@"Resume","resume taking samples")
-#define systemSoundID    1025
+#define systemSoundID
 
 @interface MainViewController()
 
@@ -22,7 +22,12 @@
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
-    NSLog(@"ViewDidLoad called on mainviewcontroller");
+    //set sound urls
+    SOUND1 = [NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_low.caf"];
+    SOUND2 = [NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_high.caf"];
+    SOUND3 = [NSURL URLWithString:@"System/Library/Audio/UISounds/short_low_high.caf"];
+    SOUND4 = [NSURL URLWithString:@"System/Library/Audio/UISounds/middle_9_short_double_low.caf"];
+    
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
     
@@ -43,7 +48,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(goToSettings)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(goToSavedData)];
-    
     
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -78,7 +82,6 @@
 
 -(void) goToSettings {
     NSLog(@"settings button pressed");
-    
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController"bundle:nil];
     [self.navigationController pushViewController:settingsViewController animated:YES];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
@@ -105,16 +108,19 @@
 	self.filterLabel = nil;
 }
 
+void playSound(NSURL* url){
+    NSLog(@"%@",url);
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((CFURLRef)url,&soundID);
+    AudioServicesPlaySystemSound(soundID);
+    
+}
+
 //Output motion data
 -(void)outputRotationData:(CMRotationRate)rotation
 {
     //get user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    //get cutoffs
-//    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
-//    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
-//    _soundOn = [defaults boolForKey:@"soundOn"];
     
     //update graphs
     CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
@@ -123,7 +129,6 @@
     [filtered addX:filter.x y:filter.y z:filter.z];
     
     if (recordOn) {
-//    NSLog(@"%@",outputString);
     [outputString appendFormat:@"%f,%f,%f,%f\n",
                         acceleration.x, acceleration.y, acceleration.z,rotation.z];
     }
@@ -131,12 +136,24 @@
     if([defaults boolForKey:@"soundOn"]){
         if(filter.y > [defaults doubleForKey:@"footStrikeCutoff"]){
             //play sound
-            AudioServicesPlaySystemSound (systemSoundID);
+            if ([defaults integerForKey:@"soundSet" ] == 0) {
+                playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_low.caf"]);
+                NSLog(@"Playing sound1");
+            }else{
+                playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/jbl_begin.caf" ]);
+            }
+            
             //Foot is now down
             footIsDown = YES;
         }
         if (rotation.z > [defaults doubleForKey:@"toeOffCutoff"] && footIsDown == YES) {
-            AudioServicesPlaySystemSound (systemSoundID+1);
+            //play sound
+            if ([defaults integerForKey:@"soundSet" ] == 0) {
+                playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_high.caf"]);
+            }else{
+                playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/jbl_confirm.caf" ]);
+            }
+            //foot is up
             footIsDown = NO;
         }
     }
@@ -156,7 +173,6 @@
         saveAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
         saveAlert.tag = 420; //blazeit
         [saveAlert show];
-        
 	}
 	else
 	{

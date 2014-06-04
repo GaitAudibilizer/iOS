@@ -8,7 +8,6 @@
 @class GraphView;
 @class AccelerometerFilter;
 
-
 @interface MainViewController : UIViewController<UIAccelerometerDelegate>
 {
 	GraphView *unfiltered;
@@ -22,17 +21,19 @@
     double footStrikeCutoff;
     double toeOffCutoff;
     BOOL footIsDown;
+    NSURL * SOUND1;
+    NSURL * SOUND2;
+    NSURL * SOUND3;
+    NSURL * SOUND4;
+    
 }
 
-
 @property(nonatomic) BOOL *soundOn;
-
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *record;
 @property(nonatomic, retain) IBOutlet UILabel *filterLabel;
-
 @property (strong, nonatomic) CMMotionManager *motionManager;
 
 -(IBAction)recordSelect:(id)sender;

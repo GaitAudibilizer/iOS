@@ -48,7 +48,7 @@
     picker.mailComposeDelegate = self;
     [picker setSubject:@"Gait data from GaitAudibilizer"];
     
-    // Attach an image to the email
+    //Attach files to email
     
     for (NSInteger i = 0; i<selectedArray.count; i++) {
         NSLog(@"%@", [selectedArray objectAtIndex:i]);
@@ -59,8 +59,6 @@
             [picker addAttachmentData:myData mimeType:@"text/csv" fileName:fileName];
         }
     }
-    
-    
     
     // Fill out the email body text
     NSString *emailBody = @"Gait data is attached as csv files. The first 3 columns are x,y, and z acceleration in g's and\

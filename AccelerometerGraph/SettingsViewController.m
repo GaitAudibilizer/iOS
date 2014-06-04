@@ -13,7 +13,7 @@
 @end
 
 @implementation SettingsViewController
-@synthesize footStrikeCutoffSlider, footStrikeSliderLabel,soundSwitch;
+@synthesize footStrikeCutoffSlider, footStrikeSliderLabel,soundSwitch,soundSelectionSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,6 +42,7 @@
     footStrikeCutoffSlider.value = [defaults doubleForKey:@"footStrikeCutoff"];
     _toeOffCutoffSlider.value = [defaults doubleForKey:@"toeOffCutoff"];
     [soundSwitch setOn:[defaults boolForKey:@"soundOn"]];
+    [soundSelectionSwitch setSelectedSegmentIndex:[defaults integerForKey:@"soundSet"]];
     
     //Set label text
     _toeOffLabelString = [NSString stringWithFormat:@"%0.2f", _toeOffCutoffSlider.value];
@@ -59,9 +60,6 @@
 
 -(IBAction)soundOnOrOff:(id)sender
 {
-    NSLog(@"Soundswitch pressed");
-    [self.delegate addItemViewController:self didFinishEnteringItem:soundSwitch.isOn];
-    
     //Save settings to NSUserDeafaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:soundSwitch.isOn forKey:@"soundOn"];
@@ -81,13 +79,24 @@
 
 - (IBAction)toeOffCutoffSelect:(id)sender {
     //update label
-    _toeOffLabelString= [NSString stringWithFormat:@"%.4f", _toeOffCutoffSlider.value];
+    _toeOffLabelString= [NSString stringWithFormat:@"%.3f", _toeOffCutoffSlider.value];
     NSLog([NSString stringWithFormat:@"%.3f", _toeOffCutoffSlider.value]);
     [_toeOffSliderLabel setText:_toeOffLabelString];
     
     //Save settings to NSUserDeafaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setFloat:_toeOffCutoffSlider.value forKey:@"toeOffCutoff"];
+}
+
+- (IBAction)chooseSound:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"sound selector pressed");
+    
+    if (soundSelectionSwitch.selectedSegmentIndex == 0){
+        [defaults setInteger:0 forKey:@"soundSet"];
+    }else{
+        [defaults setInteger:1 forKey:@"soundSet"];
+    }
 }
 
 - (void)dealloc {
@@ -98,6 +107,7 @@
     [_toeOffCutoffSlider release];
     [_toeOffCutoffSlider release];
     [_toeOffSliderLabel release];
+    [soundSelectionSwitch release];
     [super dealloc];
 }
 
@@ -107,6 +117,7 @@
     [self setFootStrikeSliderLabel:nil];
     [self setToeOffCutoffSlider:nil];
     [self setToeOffSliderLabel:nil];
+    [self setSoundSelectionSwitch:nil];
     [super viewDidUnload];
 }
 @end

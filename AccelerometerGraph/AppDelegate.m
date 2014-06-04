@@ -13,6 +13,7 @@
                                  @"toeOffCutoff", [NSNumber numberWithFloat:.05],
                                  @"gyroCutoff", [NSNumber numberWithFloat:.05],
                                  @"soundSet", [NSNumber numberWithInt:0],
+                                 @"filterOn",[NSNumber numberWithBool:YES],
                                  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }

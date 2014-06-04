@@ -24,6 +24,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *toeOffSliderLabel;
 @property (retain, nonatomic) IBOutlet UISlider *toeOffCutoffSlider;
 @property (retain, nonatomic) IBOutlet UISegmentedControl *soundSelectionSwitch;
+@property (retain, nonatomic) IBOutlet UISwitch *filterSwitch;
 
 
 
@@ -31,6 +32,7 @@
 -(IBAction)footStrikeCutoffSelect:(id)sender;
 -(IBAction)toeOffCutoffSelect:(id)sender;
 -(IBAction)chooseSound:(id)sender;
+-(IBAction)filterOnOrOff:(id)sender;
 
 
 @end

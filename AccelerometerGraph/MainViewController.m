@@ -30,6 +30,12 @@
     
 	[super viewDidLoad];
     [self setTitle:@"Gait Audibilizer"];
+ 
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor blackColor],UITextAttributeTextColor,
+                                               nil];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     
     outputString = [[NSMutableString alloc] init];
     //Start motionManager and set timestep

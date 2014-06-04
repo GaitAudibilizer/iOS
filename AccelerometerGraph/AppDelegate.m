@@ -16,6 +16,7 @@
                                  @"filterOn",[NSNumber numberWithBool:YES],
                                  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 -(void)applicationDidFinishLaunching:(UIApplication*)application

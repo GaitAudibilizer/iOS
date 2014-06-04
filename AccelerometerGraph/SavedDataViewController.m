@@ -17,6 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -24,6 +25,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -80,18 +83,45 @@
 }
 */
 
-/*
+-(NSString*)filePath{
+    NSString *path=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    
+    NSLog(@"%@",path);
+    return path;
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        
+        //Delete row from view
+        
+        
+        //Delete csv file
+        
+        NSString *fileName=[dataArray objectAtIndex:indexPath.row];
+        NSError *error=nil;
+        NSString *pathToDelete=[[self filePath]stringByAppendingPathComponent:fileName];
+        BOOL succes=[[NSFileManager defaultManager]removeItemAtPath:pathToDelete error:&error];
+        
+        if (error) {
+            NSLog(@"ERROR: %@",error);
+        }
+        
+        if (succes) {
+            //remove this item from array
+            [dataArray removeObjectAtIndex:indexPath.row];
+            //and remove cell
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else{
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Alert!" message:@"File can not be deleted" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alertView show];
+        }
+    }
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

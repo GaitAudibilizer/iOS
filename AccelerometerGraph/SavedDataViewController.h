@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 @interface SavedDataViewController : UITableViewController{
     NSArray *dataArray;
+    NSArray *selectedArray;
 }
 
 

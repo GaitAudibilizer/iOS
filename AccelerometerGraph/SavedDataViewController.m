@@ -17,7 +17,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -25,13 +24,42 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    //Add share button on top right corner
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(emailFiles)];
     
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-
+    
+    //Get filepaths
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     dataArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:nil] retain];
+    
+    //Create an array to track which items are checked
+    selectedArray = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < dataArray.count; ++i)
+    {
+        [selectedArray addObject:[NSNumber numberWithBool:NO]];
+    }
+}
+
+-(void)emailFiles{
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    [picker setSubject:@"Gait data from GaitAudibilizer"];
+    
+    // Attach an image to the email
+    NSData*myData = nil;
+    
+    [picker addAttachmentData:myData mimeType:@"image/png" fileName:@"coolImage.png"];
+    
+    // Fill out the email body text
+    NSString *emailBody = @"Gait data is attached as csv files. The first 3 columns are x,y, and z acceleration in g's and\
+    the last column is angular acceleration about z (rad/s)";
+    [picker setMessageBody:emailBody isHTML:NO];
+    [self presentModalViewController:picker animated:YES];
+
+    [picker release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,13 +90,8 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSArray *fileListAct = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:nil];
-//    dataArray = fileListAct;
-    
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[dataArray objectAtIndex:indexPath.row]];
+    
     
     return cell;
 }
@@ -100,7 +123,6 @@
         
         
         //Delete csv file
-        
         NSString *fileName=[dataArray objectAtIndex:indexPath.row];
         NSError *error=nil;
         NSString *pathToDelete=[[self filePath]stringByAppendingPathComponent:fileName];
@@ -120,6 +142,7 @@
             [alertView show];
         }
     }
+    
 }
 
 
@@ -149,6 +172,42 @@
     
     int selectedRow = indexPath.row;
     NSLog(@"touch on row %d", selectedRow);
+    
+    //Add checkmark when touched
+    UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if (newCell.accessoryType == UITableViewCellAccessoryNone) {
+        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [selectedArray replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
+    }else {
+        newCell.accessoryType = UITableViewCellAccessoryNone;
+        [selectedArray replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
+    }
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Result: canceled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Result: saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Result: sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Result: failed");
+            break;
+        default:
+            NSLog(@"Result: not sent");
+            break;
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 -(void)dealloc

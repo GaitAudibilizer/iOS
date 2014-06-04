@@ -25,6 +25,9 @@
 		34C2E66A193E9D6000D87769 /* SavedDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C2E668193E9D6000D87769 /* SavedDataViewController.m */; };
 		34C2E66C193EA35500D87769 /* SavedDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C2E669193E9D6000D87769 /* SavedDataViewController.xib */; };
 		34C2E66D193EA39F00D87769 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 342786A0192ACE8900A8804F /* SettingsViewController.xib */; };
+		34C2E66F193EE2D200D87769 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C2E66E193EE2D200D87769 /* MessageUI.framework */; };
+		34C2E671193EE34900D87769 /* GaitAudIconSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C2E670193EE34900D87769 /* GaitAudIconSmall.png */; };
+		34C2E673193EE35300D87769 /* GaitAudIconLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C2E672193EE35300D87769 /* GaitAudIconLarge.png */; };
 		3C757D751909D42400CEEA2C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C757D741909D42400CEEA2C /* AudioToolbox.framework */; };
 		6390467F0F7C386600F2FB94 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6390467E0F7C386600F2FB94 /* MainViewController.m */; };
 		639046B00F7C400300F2FB94 /* AccelerometerFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 639046AF0F7C400300F2FB94 /* AccelerometerFilter.m */; };
@@ -59,6 +62,9 @@
 		34C2E667193E9D6000D87769 /* SavedDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDataViewController.h; sourceTree = "<group>"; };
 		34C2E668193E9D6000D87769 /* SavedDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedDataViewController.m; sourceTree = "<group>"; };
 		34C2E669193E9D6000D87769 /* SavedDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SavedDataViewController.xib; sourceTree = "<group>"; };
+		34C2E66E193EE2D200D87769 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		34C2E670193EE34900D87769 /* GaitAudIconSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GaitAudIconSmall.png; sourceTree = "<group>"; };
+		34C2E672193EE35300D87769 /* GaitAudIconLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GaitAudIconLarge.png; sourceTree = "<group>"; };
 		3C757D741909D42400CEEA2C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6390467D0F7C386600F2FB94 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		6390467E0F7C386600F2FB94 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -77,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C2E66F193EE2D200D87769 /* MessageUI.framework in Frameworks */,
 				3467D282193C73020047650E /* CoreMotion.framework in Frameworks */,
 				3C757D751909D42400CEEA2C /* AudioToolbox.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -127,6 +134,8 @@
 				18AD69B711D559E7005232E4 /* Icon-Small.png */,
 				18AD69B811D559E7005232E4 /* Icon-Small@2x.png */,
 				18AD69B911D559E7005232E4 /* Icon.png */,
+				34C2E672193EE35300D87769 /* GaitAudIconLarge.png */,
+				34C2E670193EE34900D87769 /* GaitAudIconSmall.png */,
 				18AD69BA11D559E7005232E4 /* Icon@2x.png */,
 				18AD69BB11D559E7005232E4 /* iTunesArtwork */,
 				63ABFA420FDDCA4800218D27 /* MainViewController.xib */,
@@ -142,6 +151,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				34C2E66E193EE2D200D87769 /* MessageUI.framework */,
 				3467D281193C73020047650E /* CoreMotion.framework */,
 				3C757D741909D42400CEEA2C /* AudioToolbox.framework */,
 				63D21B4F0F93E74800361BAB /* QuartzCore.framework */,
@@ -231,9 +241,11 @@
 			files = (
 				34C2E66C193EA35500D87769 /* SavedDataViewController.xib in Resources */,
 				14D2E8F90DEF831F00195E03 /* MainWindow.xib in Resources */,
+				34C2E671193EE34900D87769 /* GaitAudIconSmall.png in Resources */,
 				639A50BA0FDB1BC9007BE898 /* Localizable.strings in Resources */,
 				63ABFA440FDDCA4800218D27 /* MainViewController.xib in Resources */,
 				18AD69BC11D559E7005232E4 /* Icon-72.png in Resources */,
+				34C2E673193EE35300D87769 /* GaitAudIconLarge.png in Resources */,
 				18AD69BD11D559E7005232E4 /* Icon-Small-50.png in Resources */,
 				18AD69BE11D559E7005232E4 /* Icon-Small.png in Resources */,
 				34C2E66D193EA39F00D87769 /* SettingsViewController.xib in Resources */,

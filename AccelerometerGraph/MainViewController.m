@@ -131,7 +131,8 @@ void playSound(NSURL* url){
     //update graphs
     CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
     [filter addAcceleration:acceleration];
-    [unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
+    [unfiltered addX:0 y:0 z:rotation.z];
+    NSLog(@"%f", rotation.z);
     [filtered addX:filter.x y:filter.y z:filter.z];
     
     if (recordOn) {
@@ -236,7 +237,7 @@ void playSound(NSURL* url){
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
 		// And update the filterLabel with the new filter name.
-		filterLabel.text = filter.name;
+		filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
 	}
 }
 
@@ -263,7 +264,7 @@ void playSound(NSURL* url){
 	useAdaptive = [sender selectedSegmentIndex] == 1;
 	// and update our filter and filterLabel
 	filter.adaptive = useAdaptive;
-	filterLabel.text = filter.name;
+	filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
 	
 	// Inform accessibility clients that the adaptive selection has changed.
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);

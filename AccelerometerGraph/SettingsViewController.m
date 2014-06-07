@@ -42,7 +42,7 @@
     footStrikeCutoffSlider.value = [defaults doubleForKey:@"footStrikeCutoff"];
     _toeOffCutoffSlider.value = [defaults doubleForKey:@"toeOffCutoff"];
     [soundSwitch setOn:[defaults boolForKey:@"soundOn"]];
-    [filterSwitch setOn:[defaults boolForKey:@"soundOn"]];
+    [filterSwitch setOn:[defaults boolForKey:@"filterOn"]];
     [soundSelectionSwitch setSelectedSegmentIndex:[defaults integerForKey:@"soundSet"]];
     
     //Set label text
@@ -50,6 +50,17 @@
     _footStrikeLabelString = [NSString stringWithFormat:@"%0.2f", footStrikeCutoffSlider.value];
     [footStrikeSliderLabel setText:_footStrikeLabelString];
     [_toeOffSliderLabel setText:_footStrikeLabelString];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    footStrikeCutoffSlider.value = [defaults doubleForKey:@"footStrikeCutoff"];
+    _toeOffCutoffSlider.value = [defaults doubleForKey:@"toeOffCutoff"];
+    [soundSwitch setOn:[defaults boolForKey:@"soundOn"]];
+    [filterSwitch setOn:[defaults boolForKey:@"filterOn"]];
+    [soundSelectionSwitch setSelectedSegmentIndex:[defaults integerForKey:@"soundSet"]];
+    
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning

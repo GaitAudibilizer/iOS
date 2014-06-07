@@ -17,18 +17,18 @@
 	AccelerometerFilter *filter;
     NSMutableString* outputString;
     NSString* fileName;
-	BOOL recordOn, useAdaptive;
+	BOOL recordOn, useAdaptive,soundOn;
     double footStrikeCutoff;
     double toeOffCutoff;
     BOOL footIsDown;
+    BOOL filterOn;
+    int soundSet;
     NSURL * SOUND1;
     NSURL * SOUND2;
     NSURL * SOUND3;
     NSURL * SOUND4;
     
 }
-
-@property(nonatomic) BOOL *soundOn;
 
 @property(nonatomic, retain) IBOutlet GraphView *unfiltered;
 @property(nonatomic, retain) IBOutlet GraphView *filtered;

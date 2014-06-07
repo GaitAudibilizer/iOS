@@ -60,9 +60,10 @@
     
     //get cutoffs
     footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
-    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
-    
-    _soundOn = [defaults boolForKey:@"soundOn"];
+    toeOffCutoff  = [defaults doubleForKey:@"toeOffCutoff"];
+    filterOn   = [defaults boolForKey:@"filterOn"];
+    soundOn = [defaults boolForKey:@"soundOn"];
+    soundSet = [defaults boolForKey:@"soundSet"];
 	recordOn = NO;
 	useAdaptive = YES;
     footIsDown = NO;
@@ -77,6 +78,30 @@
 	[filtered setIsAccessibilityElement:YES];
 	[filtered setAccessibilityLabel:NSLocalizedString(@"filteredGraph", @"")];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    //get user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //get cutoffs
+    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+    toeOffCutoff     = [defaults doubleForKey:@"toeOffCutoff"];
+    soundOn = [defaults boolForKey:@"soundOn"];
+    filterOn = [defaults boolForKey:@"filterOn"];
+    soundSet = [defaults integerForKey:@"soundSet"];
+    footStrikeCutoff = [defaults doubleForKey:@"footStrikeCutoff"];
+    toeOffCutoff = [defaults doubleForKey:@"toeOffCutoff"];
+    
+    //Set accelerometer graph label
+    if (filterOn) {
+        filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
+    }else{
+        filterLabel.text = [NSString stringWithFormat:@"%s", "Accelerometer"];
+    }
 }
 
 -(void) goToSavedData{
@@ -95,7 +120,7 @@
 
 - (void)addItemViewController:(SettingsViewController *)controller didFinishEnteringItem:(BOOL *)item
 {
-    _soundOn = item;
+    soundOn = item;
     NSLog(item ? @"Yes" : @"No");
 }
 
@@ -119,31 +144,35 @@ void playSound(NSURL* url){
     SystemSoundID soundID;
     AudioServicesCreateSystemSoundID((CFURLRef)url,&soundID);
     AudioServicesPlaySystemSound(soundID);
-    
 }
 
 //Output motion data
 -(void)outputRotationData:(CMRotationRate)rotation
 {
     //get user defaults
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //update graphs
     CMAcceleration acceleration = self.motionManager.accelerometerData.acceleration;
     [filter addAcceleration:acceleration];
     [unfiltered addX:0 y:0 z:rotation.z];
-    NSLog(@"%f", rotation.z);
-    [filtered addX:filter.x y:filter.y z:filter.z];
+//    NSLog(@"%f", rotation.z);
+    if (filterOn) {
+        [filtered addX:filter.x y:filter.y z:filter.z];
+    }else{
+        [filtered addX:acceleration.x y:acceleration.y z:acceleration.z];
+    }
+    
     
     if (recordOn) {
     [outputString appendFormat:@"%f,%f,%f,%f\n",
                         acceleration.x, acceleration.y, acceleration.z,rotation.z];
     }
     
-    if([defaults boolForKey:@"soundOn"]){
-        if(filter.y > [defaults doubleForKey:@"footStrikeCutoff"]){
+    if(soundOn){
+        if(filter.y > footStrikeCutoff){
             //play sound
-            if ([defaults integerForKey:@"soundSet" ] == 0) {
+            if (soundSet == 0) {
                 playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_low.caf"]);
                 NSLog(@"Playing sound1");
             }else{
@@ -153,9 +182,9 @@ void playSound(NSURL* url){
             //Foot is now down
             footIsDown = YES;
         }
-        if (rotation.z > [defaults doubleForKey:@"toeOffCutoff"] && footIsDown == YES) {
+        if (rotation.z > toeOffCutoff && footIsDown == YES) {
             //play sound
-            if ([defaults integerForKey:@"soundSet" ] == 0) {
+            if (soundSet == 0) {
                 playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/short_double_high.caf"]);
             }else{
                 playSound([NSURL URLWithString:@"System/Library/Audio/UISounds/jbl_confirm.caf" ]);
@@ -237,7 +266,9 @@ void playSound(NSURL* url){
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
 		// And update the filterLabel with the new filter name.
-		filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
+        if (filterOn) {
+            filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
+        }
 	}
 }
 
@@ -264,7 +295,9 @@ void playSound(NSURL* url){
 	useAdaptive = [sender selectedSegmentIndex] == 1;
 	// and update our filter and filterLabel
 	filter.adaptive = useAdaptive;
-	filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
+    if (filterOn) {
+        	filterLabel.text = [NSString stringWithFormat:@"%s %@", "Accelerometer: ", filter.name];
+    }
 	
 	// Inform accessibility clients that the adaptive selection has changed.
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
